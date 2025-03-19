@@ -19,6 +19,14 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
+    /**
+     * create transaction
+     *
+     * @param accountId
+     * @param amount
+     * @return
+     */
+
     @PostMapping
     public ResponseEntity<Transaction> createTransaction(@RequestParam String accountId, @RequestParam BigDecimal amount) {
         try {
@@ -29,6 +37,12 @@ public class TransactionController {
         }
     }
 
+    /**
+     *  get transaction by id
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Transaction> getTransaction(@PathVariable String id) {
         Optional<Transaction> transaction = transactionService.getTransaction(id);
@@ -36,12 +50,25 @@ public class TransactionController {
                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * get transactions by page
+     *
+     *
+     * @param page
+     * @param size
+     * @return
+     */
     @GetMapping
     public ResponseEntity<List<Transaction>> getTransactionsByPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         List<Transaction> transactions = transactionService.getTransactionsByPage(page, size);
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTransaction(@PathVariable String id) {
         try {

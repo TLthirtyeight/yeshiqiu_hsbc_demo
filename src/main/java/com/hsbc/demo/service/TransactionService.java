@@ -21,6 +21,13 @@ public class TransactionService {
         this.transactionRepository = transactionRepository;
     }
 
+    /**
+     * create  transaction
+     *
+     * @param accountId
+     * @param amount
+     * @return
+     */
     public Transaction createTransaction(String accountId, BigDecimal amount) {
         if (accountId == null || accountId.isEmpty()) {
             throw new IllegalArgumentException("Account ID cannot be null or empty");
@@ -34,6 +41,13 @@ public class TransactionService {
         return transactionRepository.save(transaction);
     }
 
+
+    /**
+     * get transaction by id
+     *
+     * @param id
+     * @return
+     */
     public Optional<Transaction> getTransaction(String id) {
         if (!isValidId(id)) {
             throw new IllegalArgumentException("Invalid transaction ID format");
@@ -45,6 +59,14 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
+
+    /**
+     * get Transactions By Page
+     *
+     * @param page
+     * @param size
+     * @return
+     */
     public List<Transaction> getTransactionsByPage(int page, int size) {
         List<Transaction> allTransactions = transactionRepository.findAll();
         int startIndex = page * size;
@@ -55,6 +77,11 @@ public class TransactionService {
         return allTransactions.subList(startIndex, endIndex);
     }
 
+    /**
+     * delete Transaction
+     *
+     * @param id
+     */
     public void deleteTransaction(String id) {
         if (!isValidId(id)) {
             throw new IllegalArgumentException("Invalid transaction ID format");
